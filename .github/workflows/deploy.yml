@@ -16,12 +16,9 @@ jobs:
         with:
           python-version: 3.9
       - name: Install Pipenv
-        run: |
-          pip install pipenv
-        
+        run: pip install pipenv
       - name: Install dependencies
-        run: |
-        pipenv install --deploy --ignore-pipfile
+        run: pipenv install --deploy --ignore-pipfile
       - name: Deploy to Lambda
         env:
           AWS_REGION: us-east-1
