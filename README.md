@@ -4,7 +4,9 @@ Create an AWS account if you haven't already done so. Go to [https://aws.amazon.
 
 # 📥 Clone Repository
 
-Clone this repository: [https://github.com/bhanuduggal/aws_python_tool_template](https://github.com/bhanuduggal/aws_python_tool_template)
+- Open this repository: [https://github.com/bhanuduggal/aws_python_tool_template](https://github.com/bhanuduggal/aws_python_tool_template)
+- Click on the green button that says 'Use as template'. Using this create your own repository.
+- Now clone your newly created repository to your machine.
 
 # 🔑 IAM User Setup and Access Key
 
