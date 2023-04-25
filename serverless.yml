@@ -1,0 +1,18 @@
+service: sample-lambda
+
+provider:
+  name: aws
+  runtime: python3.9
+  stage: ${opt:stage, 'dev'}
+  region: eu-west-1
+
+functions:
+  sample:
+    handler: tool_name.lambda_handler
+
+plugins:
+  - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    dockerizePip: non-linux

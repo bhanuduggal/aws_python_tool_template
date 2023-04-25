@@ -26,38 +26,22 @@ jobs:
         run: |
           pipenv sync --dev
 
-      - name: Package code
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install Serverless Framework
         run: |
-          mkdir package
-          cp -r tool_name package/
-          cp Pipfile* package/
-          cd package
-          pipenv install --system --deploy --ignore-pipfile
-          zip -r ../tool_name.zip .
+          npm install -g serverless
 
-
-
-
-      - name: Install and configure AWS CLI
+      - name: Configure AWS credentials for Serverless
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
         run: |
-          pip install awscli
-          aws configure set aws_access_key_id ${{ secrets.ACCESS_KEY }}
-          aws configure set aws_secret_access_key ${{ secrets.SECRET_ACCESS_KEY }}
-          aws configure set region eu-west-1
+          sls config credentials --provider aws --key $AWS_ACCESS_KEY_ID --secret $AWS_SECRET_ACCESS_KEY
 
-      - name: Check if Lambda function exists
+      - name: Deploy to AWS Lambda using Serverless
         run: |
-          aws lambda get-function --function-name sample > /dev/null 2>&1 && echo 'function_exists=true' >> $GITHUB_ENV || echo 'function_exists=false' >> $GITHUB_ENV
-
-
-      - name: Create Lambda function if it does not exist
-        if: env.function_exists == 'false'
-        run: |
-          aws lambda create-function --function-name sample --runtime python3.9 --role arn:aws:iam::371823072103:role/lambda_functions --handler tool_name.lambda_handler --zip-file fileb://tool_name.zip
-
-      - name: Update Lambda function
-        if: env.function_exists == 'true'
-        run: |
-          aws lambda update-function-code --function-name sample --zip-file fileb://tool_name.zip --publish
-
-
+          sls deploy --stage prod
