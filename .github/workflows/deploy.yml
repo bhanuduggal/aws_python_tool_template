@@ -21,7 +21,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: 'eu-west-1
+          AWS_DEFAULT_REGION: 'eu-west-1'
         run: |
           pipenv run sam build
           pipenv run sam deploy --guided
