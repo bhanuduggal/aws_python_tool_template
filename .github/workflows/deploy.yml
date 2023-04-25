@@ -36,10 +36,6 @@ jobs:
           ACCESS_KEY=${{ github.event.client_payload.ACCESS_KEY }}
           SECRET_ACCESS_KEY=${{ github.event.client_payload.SECRET_ACCESS_KEY }}
 
-          # Use the secrets as environment variables or arguments in your commands
-          # For example:
-          your-command --arg1 $ACCESS_KEY--arg2 $SECRET_ACCESS_KEY
-
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
