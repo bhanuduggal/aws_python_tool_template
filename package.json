@@ -4,7 +4,6 @@
   "description": "My Serverless Python project",
   "main": "tool_name/tool_name.py",
   "dependencies": {
-    "python3": ">=3.6.0",
     "serverless-python-requirements": "^6.0.0"
   },
   "devDependencies": {
