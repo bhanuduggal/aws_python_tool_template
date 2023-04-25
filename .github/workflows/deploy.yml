@@ -15,7 +15,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: 3.x
           
       - name: Install pipenv
         run: |
@@ -31,11 +31,18 @@ jobs:
           pipenv run pyinstaller --onefile --clean tool_name/tool_name.py
           zip tool_name.zip tool_name.py dist/tool_name
           
-      - name: default deploy
+      - name: Deploy to AWS Lambda
         uses: appleboy/lambda-action@v0.1.9
         with:
-          aws_access_key_id: ${{ secrets.ACCESS_KEY}}
-          aws_secret_access_key: ${{ secrets.SECRET_ACCESS_KEY }}
-          aws_region: ${{ secrets.AWS_REGION }}
-          function_name: sample
-          source: tool_name/tool_name.py
+          AWS_REGION: us-east-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+          FUNCTION_NAME: sample
+          ZIP_FILE: tool_name.zip
+          HANDLER_NAME: tool_name.handler_function
+          RUNTIME: python3.8
+          MEMORY_SIZE: 256
+          TIMEOUT: 30
+          ENVIRONMENT_VARIABLES: '{"key1":"value1", "key2":"value2"}'
+          
+
