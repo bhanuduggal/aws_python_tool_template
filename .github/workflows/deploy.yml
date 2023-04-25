@@ -12,36 +12,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-
-      - name: Install pipenv
-        run: |
-          python -m pip install --upgrade pip
-          pip install pipenv
-
       - name: Install dependencies
-        run: |
-          pipenv sync --dev
+        run: pipenv install --dev
 
-      - name: Install Node.js
-        uses: actions/setup-node@v2
+      - name: Deploy to AWS Lambda
+        uses: serverless/github-action@v1.3.0
         with:
-          node-version: 14
-
-      - name: Install Serverless Framework
-        run: |
-          npm install -g serverless
-
-      - name: Configure AWS credentials for Serverless
+          args: deploy --stage production
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
-        run: |
-          sls config credentials --provider aws --key $AWS_ACCESS_KEY_ID --secret $AWS_SECRET_ACCESS_KEY
-
-      - name: Deploy to AWS Lambda using Serverless
-        run: |
-          sls deploy --stage prod
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
