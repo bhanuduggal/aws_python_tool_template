@@ -4,4 +4,4 @@ Resources:
     Properties:
       CodeUri: tool_name/
       Handler: tool_name.lambda_handler
-      Runtime: python3.8
+      Runtime: python3.9
