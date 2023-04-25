@@ -44,5 +44,5 @@ jobs:
           MEMORY_SIZE: 256
           TIMEOUT: 30
           ENVIRONMENT_VARIABLES: '{"key1":"value1", "key2":"value2"}'
+          CREATE_FUNCTION: true
           
-
