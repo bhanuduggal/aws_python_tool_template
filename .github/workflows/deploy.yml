@@ -15,7 +15,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.x
+          python-version: 3.9
           
       - name: Install pipenv
         run: |
@@ -40,7 +40,7 @@ jobs:
           FUNCTION_NAME: sample
           ZIP_FILE: tool_name.zip
           HANDLER_NAME: tool_name.handler_function
-          RUNTIME: python3.8
+          RUNTIME: python3.9
           MEMORY_SIZE: 256
           TIMEOUT: 30
           ENVIRONMENT_VARIABLES: '{"key1":"value1", "key2":"value2"}'
