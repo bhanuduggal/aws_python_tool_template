@@ -1,4 +1,4 @@
-service: tool_name
+service: tool-name
 
 provider:
   name: aws
@@ -13,7 +13,6 @@ functions:
       - http:
           path: /
           method: ANY
-        cors: true
 
 plugins:
   - serverless-python-requirements
