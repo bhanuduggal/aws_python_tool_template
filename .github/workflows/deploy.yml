@@ -28,4 +28,4 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY}}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
         run: |
-          serverless deploy
+          npx serverless deploy --plugin serverless-python-requirements
