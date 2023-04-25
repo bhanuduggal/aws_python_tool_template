@@ -1,13 +1,10 @@
 {
-  "name": "aws-python-tool-template",
+  "name": "tool_name",
   "version": "1.0.0",
-  "description": "A template repository to copy for future Python projects.",
-  "dependencies": {
-    "serverless": "^2.76.0",
+  "description": "A serverless application",
+  "dependencies": {},
+  "devDependencies": {
+    "serverless": "^2.69.0",
     "serverless-python-requirements": "^5.2.0"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "deploy": "serverless deploy"
   }
 }
