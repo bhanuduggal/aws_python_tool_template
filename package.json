@@ -1,21 +1,6 @@
-{
-  "name": "aws_python_tool_template",
-  "version": "1.0.0",
-  "description": "A template repository to copy for future python projects.",
-  "main": "index.js",
-  "directories": {
-    "test": "tests"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "serverless-python-requirements": "^6.0.0"
-  },
-  "dependencies": {
-    "fs-extra": "^11.1.1"
-  }
+{"devDependencies": {
+  "aws-sdk": "^2.928.0",
+  "serverless-python-requirements": "^5.2.0",
+  "serverless-deployment-bucket": "^1.0.0"
+}
 }
