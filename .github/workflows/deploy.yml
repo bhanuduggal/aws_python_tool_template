@@ -41,10 +41,19 @@ jobs:
           echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" >> $GITHUB_ENV
           echo "AWS_REGION=$AWS_REGION" >> $GITHUB_ENV
 
-      - name: Deploy to AWS Lambda
+      - name: Check if Lambda function exists
         run: |
           docker run --rm -v $(pwd):/aws -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e AWS_REGION amazon/aws-cli:latest /bin/sh -c "\
-            aws lambda get-function --function-name sample || (\
-              aws lambda create-function --function-name sample --runtime python3.9 --role arn:aws:iam::371823072103:role/lambda_functions --handler tool_name.tool_name --zip-file fileb://tool_name.zip && \
-              aws lambda update-function-code --function-name sample --zip-file fileb://tool_name.zip --publish)"
+            aws lambda get-function --function-name sample > /dev/null 2>&1 && echo 'function_exists=true' >> $GITHUB_ENV || echo 'function_exists=false' >> $GITHUB_ENV"
 
+      - name: Create Lambda function if it does not exist
+        if: env.function_exists == 'false'
+        run: |
+          docker run --rm -v $(pwd):/aws -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e AWS_REGION amazon/aws-cli:latest /bin/sh -c "\
+            aws lambda create-function --function-name sample --runtime python3.9 --role arn:aws:iam::371823072103:role/lambda_functions --handler tool_name.tool_name --zip-file fileb://tool_name.zip"
+
+      - name: Update Lambda function
+        if: env.function_exists == 'true'
+        run: |
+          docker run --rm -v $(pwd):/aws -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e AWS_REGION amazon/aws-cli:latest /bin/sh -c "\
+            aws lambda update-function-code --function-name sample --zip-file fileb://tool_name.zip --publish"
