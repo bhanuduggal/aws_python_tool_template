@@ -4,6 +4,13 @@ on:
     branches:
       - main
 
+  name: Deploy Workflow
+
+  workflow_call:
+    secrets:
+      # Add any required secrets here
+
+
 jobs:
   deploy:
     name: deploy
