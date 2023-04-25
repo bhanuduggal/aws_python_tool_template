@@ -32,15 +32,18 @@ jobs:
           zip tool_name.zip tool_name.py dist/tool_name
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
-          aws-region: eu-west-1
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+          AWS_REGION: eu-west-1
+        run: |
+          echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" >> $GITHUB_ENV
+          echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" >> $GITHUB_ENV
+          echo "AWS_REGION=$AWS_REGION" >> $GITHUB_ENV
 
       - name: Deploy to AWS Lambda
-        uses: aws-actions/aws-cli@v1
-        with:
-          entrypoint: /bin/sh
-          args: |
-            -c "aws lambda get-function --function-name sample || aws lambda create-function --function-name sample --runtime python3.9 --role arn:aws:iam::371823072103:role/lambda_functions --handler tool_name.tool_name --zip-file fileb://tool_name.zip; aws lambda update-function-code --function-name sample --zip-file fileb://tool_name.zip --publish"
+        run: |
+          docker run --rm -v $(pwd):/aws -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e AWS_REGION amazon/aws-cli:2.x /bin/sh -c "\
+            aws lambda get-function --function-name sample || \
+            aws lambda create-function --function-name sample --runtime python3.9 --role arn:aws:iam::371823072103:role/lambda_functions --handler tool_name.tool_name --zip-file fileb://tool_name.zip; \
+            aws lambda update-function-code --function-name sample --zip-file fileb://tool_name.zip --publish"
