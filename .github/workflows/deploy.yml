@@ -35,14 +35,12 @@ jobs:
         uses: appleboy/lambda-action@v0.1.9
         with:
           AWS_REGION: u${{ secrets.AWS_REGION }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
-          FUNCTION_NAME: sample
-          ZIP_FILE: tool_name.zip
-          HANDLER_NAME: tool_name.sample
-          RUNTIME: python3.9
-          MEMORY_SIZE: 256
-          TIMEOUT: 30
-          ENVIRONMENT_VARIABLES: '{"key1":"value1", "key2":"value2"}'
-          CREATE_FUNCTION: true
+          aws_access_key_id: ${{ secrets.ACCESS_KEY }}
+          aws_secret_access_key: ${{ secrets.SECRET_ACCESS_KEY }}
+          function_name: sample
+          zip_file: tool_name.zip
+          runtime: python3.9
+          memory_size: 256
+          timeout: 30
+          publish: true
           
