@@ -31,12 +31,6 @@ jobs:
     steps:
       # --------- use Python to install Python dependencies and run linter, tests, etc. ---------
       - uses: actions/checkout@v2
-      - name: Run deployment using secrets from client_payload
-        run: |
-          ACCESS_KEY=${{ github.event.client_payload.ACCESS_KEY }}
-          SECRET_ACCESS_KEY=${{ github.event.client_payload.SECRET_ACCESS_KEY }}
-
-
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
@@ -92,5 +86,5 @@ jobs:
         env:
           # SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
           # or if using AWS credentials directly
-          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
