@@ -23,11 +23,26 @@ jobs:
     - name: Install dependencies
       run: pipenv install --deploy --ignore-pipfile
       
-    - name: Deploy code to Lambda
-      uses: einsteinish/github-action-deploy-lambda@v1.0.0
-      with:
-        function-name: my-lambda-function # Replace with your Lambda function name
-        handler-name: tool_name.tool_name # Replace with the path to your Python file and handler function
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }} # Replace with your AWS access key ID
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # Replace with your AWS secret access key
-        aws-region: eu-west-1 # Replace with your desired AWS region
+    - name: Deploy to AWS Lambda
+        uses: aws-actions/aws-lambda-deploy@v0.2.1
+        with:
+          function-name: sample
+          zip-file: tool_name.zip
+          handler: tool_name.tool_name
+          runtime: python3.8
+          aws-region: us-east-1
+          environment: '{"key1":"value1", "key2":"value2"}'
+          timeout: 5
+          
+      - name: Schedule cron job
+        uses: joeltio/lambda-cron@v1.0.0
+        with:
+          function-name: sample
+          schedule-expression: 'cron(0 0 * * ? *)' # Runs daily at midnight UTC
+          aws-region: eu-west-1
+
+      - name: Configure AWS credentials
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set region eu-west-1 # Replace with your desired region
