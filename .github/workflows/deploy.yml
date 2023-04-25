@@ -1,7 +1,7 @@
 name: Deploy to AWS Lambda
 
 on:
-  pull_request:
+  push:
     branches:
       - main
 
@@ -17,12 +17,11 @@ jobs:
         with:
           node-version: 14
 
+      - name: Remove existing node_modules
+        run: rm -rf node_modules
+
       - name: Install dependencies
-        run: npm install serverless serverless-python-requirements
-
-
-      - name: Install Serverless Framework
-        run: npm install -g serverless
+        run: npm install
 
       - name: Set up Python
         uses: actions/setup-python@v2
