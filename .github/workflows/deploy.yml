@@ -34,7 +34,7 @@ jobs:
       - name: Deploy to AWS Lambda
         uses: appleboy/lambda-action@v0.1.9
         with:
-          AWS_REGION: us-east-1
+          AWS_REGION: u${{ secrets.AWS_REGION }}
           AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
           FUNCTION_NAME: sample
