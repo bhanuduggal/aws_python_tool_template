@@ -30,8 +30,9 @@ jobs:
         run: |
           mkdir package
           cp -r tool_name package/
-          cd package
-          zip -r ../tool_name.zip .
+          cd package/tool_name
+          zip -r ../../tool_name.zip .
+
 
 
       - name: Install and configure AWS CLI
