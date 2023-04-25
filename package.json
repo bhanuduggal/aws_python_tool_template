@@ -1,5 +1,13 @@
 {
-  "devDependencies": {
+  "name": "tool_name",
+  "version": "1.0.0",
+  "description": "My Serverless Python project",
+  "main": "tool_name/tool_name.py",
+  "dependencies": {
+    "python3": ">=3.6.0",
     "serverless-python-requirements": "^6.0.0"
+  },
+  "devDependencies": {
+    "serverless": "^3.30.1"
   }
 }
