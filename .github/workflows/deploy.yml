@@ -55,3 +55,4 @@ jobs:
         if: env.function_exists == 'true'
         run: |
           aws lambda update-function-code --function-name sample --zip-file fileb://tool_name.zip --publish
+
