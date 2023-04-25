@@ -2,28 +2,31 @@ name: Deploy to AWS Lambda
 
 on:
   pull_request:
-    branches: [ main ]
-    types: [ opened, reopened, synchronize ]
+    branches:
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-      
-    - name: Setup Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.9' # Replace with your desired Python version
-        
-    - name: Install pipenv
-      run: pip install pipenv
-      
-    - name: Install dependencies
-      run: pipenv install --deploy --ignore-pipfile
-      
-    - name: Deploy to AWS Lambda
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+          
+      - name: Install pipenv
+        run: |
+          python -m pip install --upgrade pip
+          pip install pipenv
+          
+      - name: Install dependencies
+        run: |
+          pipenv sync --dev
+          
+      - name: Deploy to AWS Lambda
         uses: aws-actions/aws-lambda-deploy@v0.2.1
         with:
           function-name: sample
@@ -33,16 +36,13 @@ jobs:
           aws-region: us-east-1
           environment: '{"key1":"value1", "key2":"value2"}'
           timeout: 5
+          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          publish: true
           
       - name: Schedule cron job
         uses: joeltio/lambda-cron@v1.0.0
         with:
           function-name: sample
           schedule-expression: 'cron(0 0 * * ? *)' # Runs daily at midnight UTC
-          aws-region: eu-west-1
-
-      - name: Configure AWS credentials
-        run: |
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set region eu-west-1 # Replace with your desired region
+          aws-region: us-east-1
