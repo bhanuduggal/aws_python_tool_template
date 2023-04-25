@@ -10,6 +10,8 @@ on:
 
   workflow_call:
     secrets:
+      SOME_USER:
+        required: false
       # Add any required secrets 
 
 
