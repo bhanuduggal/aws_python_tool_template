@@ -31,16 +31,11 @@ jobs:
           pipenv run pyinstaller --onefile --clean tool_name/tool_name.py
           zip tool_name.zip tool_name.py dist/tool_name
           
-      - name: Deploy to AWS Lambda
+      - name: default deploy
         uses: appleboy/lambda-action@v0.1.9
         with:
-          AWS_REGION: us-east-1
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          FUNCTION_NAME: sample
-          ZIP_FILE: tool_name.zip
-          HANDLER_NAME: tool_name.handler_function
-          RUNTIME: python3.9
-          MEMORY_SIZE: 256
-          TIMEOUT: 30
-          ENVIRONMENT_VARIABLES: '{"key1":"value1", "key2":"value2"}'
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: ${{ secrets.AWS_REGION }}
+          function_name: gorush
+          source: example/index.js
