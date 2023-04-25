@@ -23,6 +23,9 @@ jobs:
           pip install pipenv
           pipenv install --deploy --dev
 
+      - name: Remove existing node_modules
+        run: rm -rf node_modules
+
       - name: Deploy with Serverless
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY}}
