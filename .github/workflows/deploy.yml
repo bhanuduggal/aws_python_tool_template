@@ -30,8 +30,11 @@ jobs:
         run: |
           mkdir package
           cp -r tool_name package/
-          cd package/tool_name
-          zip -r ../../tool_name.zip .
+          cp Pipfile* package/
+          cd package
+          pipenv install --system --deploy --ignore-pipfile
+          zip -r ../tool_name.zip .
+
 
 
 
