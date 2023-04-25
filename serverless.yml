@@ -7,7 +7,7 @@ provider:
   region: eu-west-1
 
 functions:
-  your-function-name:
+  tool_name_function:
     handler: tool_name.tool_name.lambda_handler
     events:
       - http:

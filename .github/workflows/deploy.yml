@@ -20,6 +20,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install Serverless Framework
+        run: npm install -g serverless
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
