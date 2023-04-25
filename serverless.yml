@@ -21,4 +21,6 @@ custom:
   pythonRequirements:
     dockerizePip: non-linux
     fileName: requirements.txt
+    noDeploy: true
+
 
