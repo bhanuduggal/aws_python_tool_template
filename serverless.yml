@@ -1,0 +1,28 @@
+service: AWSPythonTemplate
+
+provider:
+  name: aws
+  runtime: python3.9
+  region: eu-west-1
+  stage: dev
+  #environment:
+   # MY_VAR: my_value # environment variables that will be available in your code
+  #iamRoleStatements:
+   # - Effect: "Allow"
+    #  Action:
+   #     - "lambda:InvokeFunction"
+   #   Resource: "*"
+
+functions:
+  tool_name:
+    handler: tool_name/tool_name.lambda_handler
+    events:
+      - schedule: rate(1 day) # the Lambda will be triggered once a day
+
+plugins:
+  - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    dockerizePip: non-linux
+
