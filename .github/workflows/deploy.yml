@@ -28,15 +28,9 @@ jobs:
         with:
           python-version: 3.9
 
-      - name: Install pipenv
-        run: |
-          python -m pip install --upgrade pip
-          pip install pipenv
-
       - name: Generate requirements.txt from Pipfile.lock
         run: |
           python generate_requirements.py
-
 
       - name: Install Python dependencies
         run: |
