@@ -37,10 +37,10 @@ jobs:
         run: |
           pipenv install --deploy --system --ignore-pipfile
 
-     - name: Deploy to AWS Lambda
-       run: npx serverless deploy --stage production
-       env:
-         AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
-         AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
-         SLS_DEBUG: '*'
+      - name: Deploy to AWS Lambda
+        run: npx serverless deploy --stage production
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+          SLS_DEBUG: '*'
 
