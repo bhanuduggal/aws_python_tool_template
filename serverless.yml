@@ -19,10 +19,10 @@ functions:
     events:
       - schedule: rate(1 day) # the Lambda will be triggered once a day
 
-plugins:
-  - serverless-python-requirements
-
 custom:
   pythonRequirements:
     dockerizePip: non-linux
 
+
+plugins:
+  - serverless-python-requirements
