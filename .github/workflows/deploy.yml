@@ -12,6 +12,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Install pipenv
+        run: |
+          python3 -m pip install --user pipenv
+
       - name: Install dependencies
         run: pipenv install --dev
 
