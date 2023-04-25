@@ -33,14 +33,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install pipenv
 
-      - name: Install pipenv-to-requirements
+      - name: Generate requirements.txt from Pipfile.lock
         run: |
-          python -m pip install --upgrade pip
-          pip install pipenv-to-requirements
+          python -c "import json; with open('Pipfile.lock') as f: data = json.load(f); deps = data.get('default', {}); with open('requirements.txt', 'w') as r: r.write('\n'.join(f'{k}{v['version']}' for k, v in deps.items()))"
 
-      - name: Generate requirements.txt from Pipfile
-        run: |
-          pipenv_to_requirements -f
 
       - name: Install Python dependencies
         run: |
