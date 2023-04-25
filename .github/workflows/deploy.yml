@@ -28,8 +28,11 @@ jobs:
 
       - name: Package code
         run: |
-          pipenv run pyinstaller --onefile --clean tool_name/tool_name.py
-          zip tool_name.zip tool_name.py dist/tool_name
+          mkdir package
+          cp -r tool_name package/
+          cd package
+          zip -r ../tool_name.zip .
+
 
       - name: Install and configure AWS CLI
         run: |
