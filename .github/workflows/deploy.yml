@@ -15,7 +15,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.x
+          python-version: 3.9
           
       - name: Install pipenv
         run: |
@@ -26,23 +26,21 @@ jobs:
         run: |
           pipenv sync --dev
           
-      - name: Deploy to AWS Lambda
-        uses: aws-actions/aws-lambda-deploy@v0.2.1
-        with:
-          function-name: sample
-          zip-file: tool_name.zip
-          handler: tool_name.tool_name
-          runtime: python3.8
-          aws-region: us-east-1
-          environment: '{"key1":"value1", "key2":"value2"}'
-          timeout: 5
-          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          publish: true
+      - name: Package code
+        run: |
+          pipenv run pyinstaller --onefile --clean tool_name/tool_name.py
+          zip tool_name.zip tool_name.py dist/tool_name
           
-      - name: Schedule cron job
-        uses: joeltio/lambda-cron@v1.0.0
+      - name: Deploy to AWS Lambda
+        uses: appleboy/lambda-action@v0.1.9
         with:
-          function-name: sample
-          schedule-expression: 'cron(0 0 * * ? *)' # Runs daily at midnight UTC
-          aws-region: us-east-1
+          AWS_REGION: us-east-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          FUNCTION_NAME: sample
+          ZIP_FILE: tool_name.zip
+          HANDLER_NAME: tool_name.handler_function
+          RUNTIME: python3.9
+          MEMORY_SIZE: 256
+          TIMEOUT: 30
+          ENVIRONMENT_VARIABLES: '{"key1":"value1", "key2":"value2"}'
