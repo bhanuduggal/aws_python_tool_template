@@ -39,7 +39,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
           FUNCTION_NAME: sample
           ZIP_FILE: tool_name.zip
-          HANDLER_NAME: tool_name.handler_function
+          HANDLER_NAME: tool_name.sample
           RUNTIME: python3.9
           MEMORY_SIZE: 256
           TIMEOUT: 30
