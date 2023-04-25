@@ -36,6 +36,9 @@ jobs:
       - name: Install Python dependencies
         run: |
           pipenv install --deploy --system --ignore-pipfile
+        env:
+          PIPENV_IGNORE_VIRTUALENVS: 1
+
 
       - name: Deploy to AWS Lambda
         run: npx serverless deploy --stage production
