@@ -16,31 +16,31 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
-          
+
       - name: Install pipenv
         run: |
           python -m pip install --upgrade pip
           pip install pipenv
-          
+
       - name: Install dependencies
         run: |
           pipenv sync --dev
-          
+
       - name: Package code
         run: |
           pipenv run pyinstaller --onefile --clean tool_name/tool_name.py
           zip tool_name.zip tool_name.py dist/tool_name
-          
-      - name: Deploy to AWS Lambda
-        uses: appleboy/lambda-action@v0.1.9
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          AWS_REGION: eu-west-1
-          aws_access_key_id: ${{ secrets.ACCESS_KEY }}
-          aws_secret_access_key: ${{ secrets.SECRET_ACCESS_KEY }}
-          function_name: sample
-          zip_file: tool_name.zip
-          runtime: python3.9
-          memory_size: 256
-          timeout: 30
-          publish: true
-          
+          aws-access-key-id: ${{ secrets.ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+
+      - name: Deploy to AWS Lambda
+        uses: aws-actions/aws-cli@v1
+        with:
+          entrypoint: /bin/sh
+          args: |
+            -c "aws lambda get-function --function-name sample || aws lambda create-function --function-name sample --runtime python3.9 --role arn:aws:iam::371823072103:role/lambda_functions --handler tool_name.tool_name --zip-file fileb://tool_name.zip; aws lambda update-function-code --function-name sample --zip-file fileb://tool_name.zip --publish"
