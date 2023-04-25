@@ -3,19 +3,6 @@ on:
   pull_request:
     branches:
       - main
-  
-  push:
-    branches:
-      - main
-
-  repository_dispatch:
-    types: [run-deploy]
-
-  workflow_call:
-    secrets:
-      SOME_USER:
-        required: false
-      # Add any required secrets 
 
 
 jobs:
