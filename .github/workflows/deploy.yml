@@ -46,7 +46,7 @@ jobs:
       - name: Create Lambda function if it does not exist
         if: env.function_exists == 'false'
         run: |
-          aws lambda create-function --function-name sample --runtime python3.9 --role arn:aws:iam::371823072103:role/lambda_functions --handler tool_name.tool_name --zip-file fileb://tool_name.zip
+          aws lambda create-function --function-name sample --runtime python3.9 --role arn:aws:iam::371823072103:role/lambda_functions --handler tool_name.sample --zip-file fileb://tool_name.zip
 
       - name: Update Lambda function
         if: env.function_exists == 'true'
