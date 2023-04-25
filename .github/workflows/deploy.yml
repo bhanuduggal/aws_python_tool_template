@@ -12,12 +12,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
       - name: Install pipenv
         run: |
-          python3 -m pip install --user pipenv
+          python -m pip install --upgrade pip
+          pip install pipenv
 
       - name: Install dependencies
-        run: pipenv install --dev
+        run: |
+          pipenv sync --dev
 
       - name: Deploy to AWS Lambda
         uses: serverless/github-action@v1.53.0
