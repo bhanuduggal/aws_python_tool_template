@@ -20,4 +20,5 @@ plugins:
 custom:
   pythonRequirements:
     dockerizePip: non-linux
-    usePipenv: true
+    fileName: requirements.txt
+
