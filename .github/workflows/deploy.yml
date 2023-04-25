@@ -1,5 +1,4 @@
-name: Deploy Lambda
-
+name: Deploy Lambda function
 on:
   pull_request:
     branches:
@@ -8,27 +7,21 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
-
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-
+      - name: Install pipenv
+        run: |
+          sudo apt-get update && \
+          sudo apt-get install -y python3-pip && \
+          pip3 install pipenv
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install pipenv
-          pipenv install --deploy --dev
-
-      - name: Remove existing node_modules
-        run: rm -rf node_modules
-
-      - name: Deploy with Serverless
+          pipenv install --dev
+      - name: Deploy Lambda function
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY}}
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'eu-west-1
         run: |
-          npx serverless deploy --plugin serverless-python-requirements
+          pipenv run sam build
+          pipenv run sam deploy --guided

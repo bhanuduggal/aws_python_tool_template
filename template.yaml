@@ -1,0 +1,7 @@
+Resources:
+  MyLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: tool_name/
+      Handler: tool_name.lambda_handler
+      Runtime: python3.8
