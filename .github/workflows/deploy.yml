@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+  repository_dispatch:
+    types: [run-deploy]
+
   workflow_call:
     secrets:
       SOME_USER:
