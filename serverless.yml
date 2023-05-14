@@ -7,7 +7,7 @@ provider:
   region: eu-west-1
   environment:
     PYTHONPATH: /var/task/tool_name
-    ENVIRONMENT: ${self:provider.stage}
+    ENVIRONMENT: ${self:provider.stage} # Creates the dev or prod environment variable for lambda
 
 plugins:
   - serverless-python-requirements

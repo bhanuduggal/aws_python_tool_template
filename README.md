@@ -64,7 +64,7 @@ Create an AWS account if you haven't already done so. Go to [https://aws.amazon.
 
 **Parameters and Secrets** For best practice, store the parameters in a .env locally and use an AWS service. I have added an example to use AWS Parameter Store in 'main.py' but there could be other services.
 
-**Attach the necessary IAM policies to your lambda role.** As you will build any lambda's and store any variables in parameter store, you will need the a policy along the following lines. This will need adding to the lambda role that will be created when the code is deployed. The lambda will not work if the policy is not attached.
+**Attach the necessary IAM policies to your lambda role.** As you will build any lambda's and store any variables in parameter store, you will need the a policy along the following lines. This will need adding to the lambda role that will be created when the code is deployed. **The lambda will not work if the policy is not attached.**
 ```json
 {
     "Version": "2012-10-17",
