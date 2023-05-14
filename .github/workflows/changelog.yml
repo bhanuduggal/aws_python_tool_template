@@ -28,6 +28,9 @@ jobs:
 
       - name: Create CHANGELOG.md if it doesn't exist
         run: touch CHANGELOG.md
+
+      - name: Add CHANGELOG.md to Git staging
+        run: git add CHANGELOG.md
       
       - name: Commit and push
         run: |
