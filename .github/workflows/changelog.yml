@@ -26,6 +26,9 @@ jobs:
       - name: Generate Changelog
         run: github_changelog_generator -u bhanuduggal -p aws_python_tool_template --token ${{ secrets.PAT }}
 
+      - name: Create CHANGELOG.md if it doesn't exist
+        run: touch CHANGELOG.md
+      
       - name: Commit and push
         run: |
           git config --local user.email "action@github.com"
