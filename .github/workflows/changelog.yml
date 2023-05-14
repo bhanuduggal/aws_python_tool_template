@@ -21,7 +21,7 @@ jobs:
         run: gem install github_changelog_generator
 
       - name: Generate Changelog
-        run: ~/.gem/ruby/3.0.0/bin/github_changelog_generator -u bhanuduggal -p aws_python_tool_template --token ${{ secrets.PAT }}
+        run: github_changelog_generator -u bhanuduggal -p aws_python_tool_template --token ${{ secrets.PAT }}
 
       - name: Commit and push
         run: |
