@@ -7,7 +7,7 @@ provider:
   region: eu-west-1
   environment:
     PYTHONPATH: /var/task/tool_name
-    ENVIRONMENT: ${self:provider.stage}
+    ENVIRONMENT: ${self:provider.stage} # Creates the dev or prod environment variable for lambda
 
 plugins:
   - serverless-python-requirements
@@ -16,7 +16,7 @@ package:
   individually: true
 
 functions:
-  theLambda:
+  testLambda:
     name: test-lambda-${self:provider.stage}
     handler: tool_name.main.lambda_handler
     description: test-lambda-${self:provider.stage}
@@ -28,3 +28,6 @@ functions:
         - "!yarn.lock"
         - "!package-lock.json"
         - "!package.json"
+      events:
+        - schedule: 
+            rate: cron(0 12 ? * SUN *)
