@@ -28,3 +28,6 @@ functions:
         - "!yarn.lock"
         - "!package-lock.json"
         - "!package.json"
+      events:
+        - schedule: 
+            rate: cron(0 12 ? * SUN *)
