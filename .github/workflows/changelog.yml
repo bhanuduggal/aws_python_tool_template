@@ -1,0 +1,28 @@
+name: Update Changelog
+
+on:
+  push:
+    branches:
+      - prod
+
+jobs:
+  update-changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Install Ruby and github_changelog_generator
+        run: |
+          sudo apt-get install ruby-full
+          gem install github_changelog_generator
+
+      - name: Generate Changelog
+        run: github_changelog_generator -u <username> -p <repository> --token ${{secrets.GITHUB_TOKEN}}
+
+      - name: Commit and push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "Updated CHANGELOG.md"
+          git push
