@@ -18,7 +18,9 @@ jobs:
           ruby-version: 3.0
 
       - name: Install github_changelog_generator
-        run: gem install --user-install github_changelog_generator
+        run: run: |
+                apt-get install -y ruby-full
+                gem install github_changelog_generator
 
       - name: Generate Changelog
         run: ~/.gem/ruby/3.0.0/bin/github_changelog_generator -u bhanuduggal -p aws_python_tool_template --token ${{ secrets.PAT }}
