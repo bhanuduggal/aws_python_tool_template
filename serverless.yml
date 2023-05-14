@@ -3,8 +3,11 @@ service: basic-serverless-lambda-python
 provider:
   name: aws
   runtime: python3.9
-  stage: dev
+  stage: ${env:STAGE, 'dev'}
   region: eu-west-1
+  environment:
+    PYTHONPATH: /var/task/tool_name
+    ENVIRONMENT: ${self:provider.stage}
 
 plugins:
   - serverless-python-requirements
@@ -14,9 +17,9 @@ package:
 
 functions:
   theLambda:
-    name: test-lambda
-    handler: tool_name.tool_name.lambda_handler
-    description: test-lambda
+    name: test-lambda-${self:provider.stage}
+    handler: tool_name.main.lambda_handler
+    description: test-lambda-${self:provider.stage}
     timeout: 5 # seconds
     memorySize: 128 # mb
     package:
