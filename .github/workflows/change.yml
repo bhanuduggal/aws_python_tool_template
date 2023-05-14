@@ -1,7 +1,7 @@
 name: Update Changelog
 
 on:
-  push:
+  pull_request:
     branches:
       - prod
 
