@@ -1,5 +1,9 @@
+from env_loader import load_env_variables
+
 def lambda_handler(event, context):
-    print("Hello World")
+    parameters = load_env_variables()
+    REGION = parameters['REGION']
+    print(REGION)
 
 
 if __name__=="__main__":
