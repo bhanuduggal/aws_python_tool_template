@@ -33,9 +33,12 @@ jobs:
         run: git add CHANGELOG.md
       
       - name: Commit and push
+        env:
+          PAT: ${{ secrets.PAT }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git commit -m "Updated CHANGELOG.md"
-          git push "https://github-actions:${{ secrets.PAT }}@github.com/bhanuduggal/aws_python_tool_template.git" prod
+          git remote add origin_with_token "https://github-actions:${{ secrets.PAT }}@github.com/bhanuduggal/aws_python_tool_template.git"
+          git push origin_with_token prod
 
