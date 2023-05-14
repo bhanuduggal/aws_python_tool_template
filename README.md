@@ -73,7 +73,7 @@ Create an AWS account if you haven't already done so. Go to [https://aws.amazon.
             "Sid": "VisualEditor0",
             "Effect": "Allow",
             "Action": "ssm:GetParameter",
-            "Resource": "arn:aws:ssm:eu-west-1:371823072103:parameter/*"
+            "Resource": "arn:aws:ssm:eu-west-1:{aws_account}:parameter/*"
         }
     ]
 }
