@@ -1,0 +1,28 @@
+name: Publish Release
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - prod
+
+jobs:
+  build:
+    name: Publish Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(date +'%Y%m%d%H%M%S')
+      - name: Publish Release
+        id: publish_release
+        uses: softprops/action-gh-release@v1
+        if: github.event.pull_request.merged
+        with:
+          draft: true
+          prerelease: false
+          tag_name: ${{ steps.get_version.outputs.VERSION }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
