@@ -11,6 +11,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          ref: prod
+
       
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
