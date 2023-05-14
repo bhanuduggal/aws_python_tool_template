@@ -21,10 +21,8 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: github.event.pull_request.merged
         with:
-          draft: false
+          draft: true
           prerelease: false
           tag_name: ${{ steps.get_version.outputs.VERSION }}
-          files: |
-            CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
