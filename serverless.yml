@@ -18,7 +18,7 @@ package:
 functions:
   theLambda:
     name: test-lambda-${self:provider.stage}
-    handler: tool_name.tool_name.lambda_handler
+    handler: tool_name.main.lambda_handler
     description: test-lambda-${self:provider.stage}
     timeout: 5 # seconds
     memorySize: 128 # mb
