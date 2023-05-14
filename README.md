@@ -15,30 +15,33 @@ Create an AWS account if you haven't already done so. Go to [https://aws.amazon.
 2. Development: The developer works on their changes in this new branch.
 3. Merge into Dev: Once the changes are complete and have been tested locally, the developer merges their branch into the dev branch.
 4. Testing in Dev: The merged changes are tested in the dev environment. If any issues are found, they are fixed in the dev branch.
-5. Merge into Main: After successful testing in the dev environment, the dev branch is merged into the main branch. At this point, the main branch is the most up-to-date branch.
-6. Release: When a release is ready, the main branch is merged into the prod branch, and the changes are deployed to the prod environment.
-7. Emergency Fix: If the main branch goes awry, the prod branch is merged back into the main branch to bring it back to the last known stable state.
+5. Merge into Prod: After successful testing in the dev environment, the dev branch is merged into the prod branch.
+6. Release: The changes are deployed to the prod environment from the prod branch.
+7. Merge Prod into Main: After the release in prod is successful, prod is merged back into main. At this point, main is the most up-to-date branch.
+8. Emergency Fix: If an emergency fix is needed, a hotfix branch can be created from prod, and after testing, it can be merged back into both prod and main.
 ```
-       +---+   New Branch    +-----+  Merge  +-----+  Merge  +-----+
-       |Main| <------------- |Work  | ------->| Dev | ------->| Main|
-       +-+-+                 +--+--+          +--+--+         +--+--+
-         |                      |               |              |
-         |                      |               |              |
-         | Merge (Emergency)    |               |              |
-         V                      |               |              |
-       +---+                    |               |              |
-       |Prod|                   |               |              |
-       +---+                    |               |              |
-                                |               |              |
-                                |               |              |
-                                +---------------+              |
-                                | Merge after Testing         |
-                                |                             |
-                                |                             |
-                                |                             |
-                                |                             |
-                                | Merge for Release          |
-                                +----------------------------->
+       +---+   New Branch    +-----+  Merge  +-----+  Merge  +-----+  Merge  +-----+
+       |Main| <------------- |Work  | ------->| Dev | ------->| Prod| ------->| Main|
+       +-+-+                 +--+--+          +--+--+         +--+--+         +--+--+
+         |                      |               |              |              |
+         |                      |               |              |              |
+         | Merge (Emergency)    |               |              |              |
+         V                      |               |              |              |
+       +---+                    |               |              |              |
+       |Hotfix|                 |               |              |              |
+       +---+                    |               |              |              |
+                                |               |              |              |
+                                |               |              |              |
+                                +---------------+              |              |
+                                | Merge after Testing         |              |
+                                |                             |              |
+                                |                             |              |
+                                |                             |              |
+                                | Merge for Release          |              |
+                                +-----------------------------+              |
+                                | Merge after Successful Release            |
+                                +------------------------------------------->
+
 ```
 
 # 🔑 IAM User Setup and Access Key
