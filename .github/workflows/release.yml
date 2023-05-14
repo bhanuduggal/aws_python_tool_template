@@ -25,6 +25,6 @@ jobs:
           prerelease: false
           tag_name: ${{ steps.get_version.outputs.VERSION }}
           files: |
-            path/to/your/files
+            CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
