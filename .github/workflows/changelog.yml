@@ -18,7 +18,7 @@ jobs:
           ruby-version: 3.0
 
       - name: Install github_changelog_generator
-        run: run: |
+        run: |
                 apt-get install -y ruby-full
                 gem install github_changelog_generator
 
