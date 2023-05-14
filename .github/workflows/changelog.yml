@@ -37,4 +37,4 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git commit -m "Updated CHANGELOG.md"
-          git push origin prod
+          git push "https://$PAT@github.com/bhanuduggal/aws_python_tool_template.git" prod
