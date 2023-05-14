@@ -1,7 +1,7 @@
 name: Update Changelog
 
 on:
-  pull_request:
+  push:
     branches:
       - prod
 
@@ -12,13 +12,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       
-      - name: Install Ruby and github_changelog_generator
-        run: |
-          sudo apt-get install ruby-full
-          gem install github_changelog_generator
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0
+
+      - name: Install github_changelog_generator
+        run: gem install --user-install github_changelog_generator
 
       - name: Generate Changelog
-        run: github_changelog_generator -u <username> -p <repository> --token ${{secrets.GITHUB_TOKEN}}
+        run: ~/.gem/ruby/3.0.0/bin/github_changelog_generator -u bhanuduggal -p aws_python_tool_template --token ${{ secrets.PAT }}
 
       - name: Commit and push
         run: |
