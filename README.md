@@ -1,3 +1,6 @@
+# Update 28/04/2024
+The lambda function in serverless.yml has been commented to avoid any utilisation of aws services with free tier coming to an end. Haven't used the template in a year, but presume the basic groundwork to setup an python lambda should remain the same.
+
 # 🚀 Setup AWS Account
 
 Create an AWS account if you haven't already done so. Go to [https://aws.amazon.com/lambda/](https://aws.amazon.com/lambda/) and click on the "Create a Free Account" button.
